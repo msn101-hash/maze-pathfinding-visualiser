@@ -2,29 +2,33 @@ import copy
 
 
 maze = [
-    [1,1,1,1,1],
-    [9,0,1,0,1],
-    [1,0,0,1,1],
-    [1,1,0,0,1],
-    [1,1,1,1,1]
+    ["#","#","#","#","#","#","#","#","#","#"],
+    ["E"," "," ","#","#"," "," "," "," ","#"],
+    ["#","#"," ","#"," "," ","#","#"," ","#"],
+    ["#"," "," "," "," ","#","#"," "," ","#"],
+    ["#","#","#","#","#","#","#","#","#","#"]
 ]
 
-x = 2
+x = 5
 y = 2
 
 def is_obstacle(x, y):
-    if maze[y][x] == 1:
+    if maze[y][x] == "#":
         return True
     
 def is_exit(x, y):
-    if maze[y][x] == 9:
+    if maze[y][x] == "E":
         return True    
 
 while True:
+    # Making a copy of the maze so that it's not permanently changed when updating
+    # the position of the robot
     maze_copy = copy.deepcopy(maze)
-    maze_copy[y][x] = 5
+    maze_copy[y][x] = "R"
     for row in maze_copy:
-        print(row)
+        for cell in row:
+            print(cell, end="")
+        print()
 
     new_x = x
     new_y = y
@@ -43,10 +47,10 @@ while True:
 
     if is_obstacle(new_x, new_y):
         print("obstacle! try again")
+        continue
     elif is_exit(new_x, new_y):
-        x = new_x
-        y = new_y
         print("Congratulations! You solved the maze")
-    else:
-        x = new_x
-        y = new_y
+        break
+
+    x = new_x
+    y = new_y
