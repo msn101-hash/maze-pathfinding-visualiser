@@ -9,48 +9,63 @@ maze = [
     ["#","#","#","#","#","#","#","#","#","#"]
 ]
 
-x = 5
-y = 2
-
 def is_obstacle(x, y):
-    if maze[y][x] == "#":
-        return True
+    return maze[y][x] == "#"
     
 def is_exit(x, y):
-    if maze[y][x] == "E":
-        return True    
+    return maze[y][x] == "E"
 
-while True:
-    # Making a copy of the maze so that it's not permanently changed when updating
-    # the position of the robot
-    maze_copy = copy.deepcopy(maze)
-    maze_copy[y][x] = "R"
-    for row in maze_copy:
-        for cell in row:
-            print(cell, end="")
-        print()
+def get_player_move():
+    commands = ["north", "south", "east", "west", "quit"]
+    while True:
+        command = input("Enter a command: ").lower()
+        if command not in commands:
+            print("Invalid command! Try again")
+            continue
+        return command
+    
+def move_robot(x, y, command):
+    new_x, new_y = x, y
 
-    new_x = x
-    new_y = y
+    MOVES = {
+        "north": (0, -1),
+        "south": (0, 1),
+        "east": (1, 0),
+        "west": (-1, 0),
+    }
 
-    prompt = input("move: ").lower()
-    if prompt == "north":
-        new_y -= 1
-    elif prompt == "south":
-        new_y += 1
-    elif prompt == "east":
-        new_x += 1
-    elif prompt == "west":
-        new_x -= 1
-    elif prompt == "quit":
-        break
+    dx, dy = MOVES[command]
+    new_x += dx
+    new_y += dy
 
     if is_obstacle(new_x, new_y):
         print("obstacle! try again")
-        continue
-    elif is_exit(new_x, new_y):
-        print("Congratulations! You solved the maze")
-        break
+        return x, y
 
-    x = new_x
-    y = new_y
+    return new_x, new_y
+
+def display_maze(x, y):
+    for i in range(len(maze)):
+        for j in range(len(maze[i])):
+            if i == y and j == x:
+                print("R", end="")
+                continue
+            print(maze[i][j], end="")
+        print()
+
+def main():
+    x, y = 5, 2
+    while True:
+        display_maze(x, y)
+        command = get_player_move()
+        if command == "quit":
+            return
+        
+        x, y = move_robot(x, y, command)
+        if is_exit(x, y):
+            print("Congratulations! You solved the maze")
+            return
+        
+
+if __name__ == "__main__":
+    main()
