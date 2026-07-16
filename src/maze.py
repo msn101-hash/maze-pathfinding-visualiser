@@ -1,16 +1,17 @@
-maze = [
-    ["#","#","#","#","#","#","#","#","#","#"],
-    ["E"," "," ","#","#"," "," "," "," ","#"],
-    ["#","#"," ","#"," "," ","#","#"," ","#"],
-    ["#"," "," "," "," ","#","#"," "," ","#"],
-    ["#","#","#","#","#","#","#","#","#","#"]
-]
+import constants
 
-def is_obstacle(y, x):
-    return maze[y][x] == "#"
-    
-def is_exit(y, x):
-    return maze[y][x] == "E"
 
-def get_maze():
-    return maze
+class Maze:
+    def __init__(self, height, width, maze):
+        self.height = height
+        self.width = width
+        self.maze = maze
+
+    def is_obstacle(self, y, x):
+        return self.maze[y][x] == constants.WALL
+        
+    def is_exit(self, y, x):
+        return self.maze[y][x] == constants.EXIT
+
+    def get_maze(self):
+        return self.maze
