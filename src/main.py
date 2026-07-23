@@ -1,10 +1,11 @@
 import generator
-from maze import Maze
-from robot import Robot
+import maze
+import robot
 import renderer
 
+
 def get_player_move():
-    commands = ["north", "south", "east", "west", "quit"]
+    commands = {"north", "south", "east", "west", "quit"}
     while True:
         command = input("Enter a command: ").lower()
         if command not in commands:
@@ -13,24 +14,21 @@ def get_player_move():
         return command
 
 def main():
-    grid = generator.generate_grid()
-    y = generator.height // 2
-    x = generator.width // 2
-    maze = Maze(y, x, generator.generate_maze(y, x, grid))
-    robot = Robot((y, x))
+    height = 11
+    width = 23
+    grid = generator.generate_maze(height, width)
+    y, x = robot.set_position(height, width)
     
     while True:
-        renderer.display_maze(maze.get_maze(), robot.get_position())
+        renderer.display_maze(grid, (y, x))
         command = get_player_move()
         if command == "quit":
             return
         
-        robot.move_robot(command, maze)
-        y, x = robot.get_position()
-        if maze.is_exit(y, x):
+        y, x = robot.move_robot(grid, command, (y, x))
+        if maze.is_exit(grid, y, x):
             print("Congratulations! You solved the maze")
             return
         
-
 if __name__ == "__main__":
     main()

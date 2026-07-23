@@ -1,29 +1,28 @@
-class Robot:
-    MOVES = {
-            "north": (-1, 0),
-            "south": (1, 0),
-            "east": (0, 1),
-            "west": (0, -1),
-        }
+import maze as Maze
 
-    # directions = ["north", "east", "south", "west"]
 
-    def __init__(self, position):
-        self.position = position
+MOVES = {
+        "north": (-1, 0),
+        "south": (1, 0),
+        "east": (0, 1),
+        "west": (0, -1),
+    }
+def set_position(height, width):
+    y = height // 2
+    x = width // 2
 
-    def move_robot(self, command, maze):
-        global position
-        new_y, new_x = self.position[0], self.position[1]
+    return y, x
 
-        dy, dx = self.MOVES[command]
-        new_y += dy
-        new_x += dx
+def move_robot(maze, command, position):
+    new_y, new_x = position[0], position[1]
 
-        if maze.is_obstacle(new_y, new_x):
-            print("obstacle! try again")
-            return
+    dy, dx = MOVES[command]
+    new_y += dy
+    new_x += dx
 
-        self.position = (new_y, new_x)
+    if Maze.is_obstacle(maze, new_y, new_x):
+        print("obstacle! try again")
+        return position
 
-    def get_position(self):
-        return self.position
+    position = (new_y, new_x)
+    return position

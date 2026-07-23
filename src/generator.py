@@ -2,17 +2,6 @@ import constants
 import random
 
 
-visited = []
-height = 11
-width = 23
-
-EXITS = {
-    "north": (0, random.randint(1, width - 2)),
-    "south": (height - 1, random.randint(1, width - 2)),
-    "east": (random.randint(1, height - 2), width - 1),
-    "west": (random.randint(1, height - 2), 0)
-}
-
 MOVES = {
     "north": (-2, 0),
     "south": (2, 0),
@@ -20,8 +9,10 @@ MOVES = {
     "west": (0, -2)
 }
 
-def generate_grid():
-    grid = []
+def generate_maze(height, width):
+    maze = []
+    visited = []
+
     for i in range(height):
         row = []
         for j in range(width):
@@ -31,52 +22,59 @@ def generate_grid():
                 row.append(constants.WALL)
             else:
                 row.append(constants.EMPTY)
-        grid.append(row)
+        maze.append(row)
 
-    generate_exits(grid)
+    y = height // 2
+    x = width // 2
+    carve_maze(y, x, maze, visited)
+    generate_exits(maze)
 
-    return grid
+    return maze
 
-def generate_exits(grid):
+def generate_exits(maze):
+    height = len(maze)
+    width = len(maze[0])
+
+    EXITS = {
+        "north": (0, random.randint(1, width - 2)),
+        "south": (height - 1, random.randint(1, width - 2)),
+        "east": (random.randint(1, height - 2), width - 1),
+        "west": (random.randint(1, height - 2), 0)
+    }
+
     for exit in EXITS.keys():
         y = EXITS[exit][0]
         x = EXITS[exit][1]
-        grid[y][x] = constants.EXIT
+        maze[y][x] = constants.EXIT
 
-def generate_maze(y, x, grid):
-    while True:
-        visited.append((y, x))
-        unvisited = find_unvisited(y, x)
-        if len(unvisited) == 0:
-            return grid
-        
+def carve_maze(y, x, maze, visited):
+    visited.append((y, x))
+    unvisited = find_unvisited(y, x, maze, visited)
+
+    while unvisited:
         neighbour = random.choice(unvisited)
-        remove_wall((y, x), neighbour, grid)
+        remove_wall((y, x), neighbour, maze)
         new_y, new_x = neighbour
-        generate_maze(new_y, new_x, grid)
+        carve_maze(new_y, new_x, maze, visited)
+        unvisited = find_unvisited(y, x, maze, visited)
 
-def find_unvisited(y, x):
+def find_unvisited(y, x, maze, visited):
+    height = len(maze)
+    width = len(maze[0])
     unvisited = []
-    for move in MOVES.keys():
+
+    for dy, dx in MOVES.values():
         new_y, new_x = y, x
-        dy, dx = MOVES[move]
         new_y += dy
         new_x += dx
 
-        if new_y in range(height) and new_x in range(width):
+        if 0 <= new_y < height and 0 <= new_x < width:
             if (new_y, new_x) not in visited:
                 unvisited.append((new_y, new_x))
 
     return unvisited
 
-def remove_wall(cell, neighbour, grid):
-    if cell[0] == neighbour[0]:
-        if cell[1] > neighbour[1]:
-            grid[cell[0]][cell[1]-1] = constants.EMPTY
-        else:
-            grid[cell[0]][neighbour[1]-1] = constants.EMPTY
-    elif cell[1] == neighbour[1]:
-        if cell[0] > neighbour[0]:
-            grid[cell[0]-1][cell[1]] = constants.EMPTY
-        else:
-            grid[neighbour[0]-1][cell[1]] = constants.EMPTY
+def remove_wall(cell, neighbour, maze):
+    wall_y = int((cell[0] + neighbour[0]) / 2)
+    wall_x = int((cell[1] + neighbour[1]) / 2)
+    maze[wall_y][wall_x] = constants.EMPTY
