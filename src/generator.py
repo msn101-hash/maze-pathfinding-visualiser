@@ -9,7 +9,11 @@ MOVES = {
     "west": (0, -2)
 }
 
-def generate_maze(height, width):
+def generate_maze(height: int, width: int) -> list[list[str]]:
+    """
+    Generate a random maze using recursive backtracking.
+    """
+    
     maze = []
     visited = []
 
@@ -31,7 +35,11 @@ def generate_maze(height, width):
 
     return maze
 
-def generate_exits(maze):
+def generate_exits(maze: list[list[str]]) -> None:
+    """
+    Generate a random exit for each edge of the maze.
+    """
+    
     height = len(maze)
     width = len(maze[0])
 
@@ -47,7 +55,17 @@ def generate_exits(maze):
         x = EXITS[exit][1]
         maze[y][x] = constants.EXIT
 
-def carve_maze(y, x, maze, visited):
+def carve_maze(
+    y: int,
+    x: int,
+    maze: list[list[str]],
+    visited: list[tuple[int, int]]
+) -> None:
+    """
+    Recursively carve passages through the maze using the
+    recursive backtracking algorithm.
+    """
+    
     visited.append((y, x))
     unvisited = find_unvisited(y, x, maze, visited)
 
@@ -58,7 +76,19 @@ def carve_maze(y, x, maze, visited):
         carve_maze(new_y, new_x, maze, visited)
         unvisited = find_unvisited(y, x, maze, visited)
 
-def find_unvisited(y, x, maze, visited):
+def find_unvisited(
+    y: int,
+    x: int,
+    maze: list[list[str]],
+    visited: list[tuple[int, int]]
+) -> list[tuple[int, int]]:
+    """
+    Return a list of neighbouring cells that have not yet been visited.
+
+    A cell is considered unvisited if it has not already been added to
+    the visited list.
+    """
+    
     height = len(maze)
     width = len(maze[0])
     unvisited = []
@@ -74,7 +104,15 @@ def find_unvisited(y, x, maze, visited):
 
     return unvisited
 
-def remove_wall(cell, neighbour, maze):
+def remove_wall(
+    cell: tuple[int, int],
+    neighbour: tuple[int, int],
+    maze: list[list[str]]
+) -> None:
+    """
+    Remove the wall between two adjacent cells.
+    """
+    
     wall_y = int((cell[0] + neighbour[0]) / 2)
     wall_x = int((cell[1] + neighbour[1]) / 2)
     maze[wall_y][wall_x] = constants.EMPTY

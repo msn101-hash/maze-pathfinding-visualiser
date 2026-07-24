@@ -4,7 +4,11 @@ import robot
 import renderer
 
 
-def get_player_move():
+def get_player_move() -> str:
+    """
+    Get the input of a player and check if it is a valid command.
+    """
+
     commands = {"north", "south", "east", "west", "quit"}
     while True:
         command = input("Enter a command: ").lower()
@@ -13,7 +17,11 @@ def get_player_move():
             continue
         return command
 
-def main():
+def main() -> None:
+    """
+    Run the program.
+    """
+
     height = 11
     width = 23
     grid = generator.generate_maze(height, width)
