@@ -37,11 +37,8 @@ def generate_maze(height: int, width: int) -> list[list[str]]:
 
 def generate_exits(maze: list[list[str]]) -> None:
     """
-    Generate a random exit for each edge of the maze.
+    Generate a random exit on the edge of the maze.
     """
-    
-    height = len(maze)
-    width = len(maze[0])
 
     EXITS = {
         "north": (0, random.randint(1, width - 2)),
@@ -50,10 +47,13 @@ def generate_exits(maze: list[list[str]]) -> None:
         "west": (random.randint(1, height - 2), 0)
     }
 
-    for exit in EXITS.keys():
-        y = EXITS[exit][0]
-        x = EXITS[exit][1]
-        maze[y][x] = constants.EXIT
+    height = len(maze)
+    width = len(maze[0])
+
+    exit = random.choice(list(EXITS.keys()))
+    y = EXITS[exit][0]
+    x = EXITS[exit][1]
+    maze[y][x] = constants.EXIT
 
 def carve_maze(
     y: int,
