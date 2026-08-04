@@ -40,15 +40,15 @@ def generate_exits(maze: list[list[str]]) -> None:
     Generate a random exit on the edge of the maze.
     """
 
+    height = len(maze)
+    width = len(maze[0])
+
     EXITS = {
         "north": (0, random.randint(1, width - 2)),
         "south": (height - 1, random.randint(1, width - 2)),
         "east": (random.randint(1, height - 2), width - 1),
         "west": (random.randint(1, height - 2), 0)
     }
-
-    height = len(maze)
-    width = len(maze[0])
 
     exit = random.choice(list(EXITS.keys()))
     y = EXITS[exit][0]
@@ -88,6 +88,13 @@ def find_unvisited(
     A cell is considered unvisited if it has not already been added to
     the visited list.
     """
+
+    MOVES = {
+        "north": (-2, 0),
+        "south": (2, 0),
+        "east": (0, 2),
+        "west": (0, -2)
+    }
     
     height = len(maze)
     width = len(maze[0])
