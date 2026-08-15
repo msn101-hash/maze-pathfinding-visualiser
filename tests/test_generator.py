@@ -1,7 +1,7 @@
 import unittest
-import generator
-import constants
-import random
+from src import generator
+from src import constants
+
 
 class TestGenerator(unittest.TestCase):
 
@@ -127,7 +127,7 @@ class TestGenerator(unittest.TestCase):
 
         self.assertEqual(1, top + bottom + left + right)
 
-    def test_maze_connected(self):
+    def test_maze_connectivity(self):
         height = 11
         width = 11
         maze = generator.generate_maze(height, width)

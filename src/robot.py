@@ -1,4 +1,4 @@
-import maze as Maze
+from . import maze
 
 
 MOVES = {
@@ -18,7 +18,7 @@ def set_position(height: int, width: int) -> tuple[int, int]:
     return y, x
 
 def move_robot(
-    maze: list[list[str]],
+    grid: list[list[str]],
     command: str,
     position: tuple[int, int]
 ) -> tuple[int, int]:
@@ -32,7 +32,7 @@ def move_robot(
     new_y += dy
     new_x += dx
 
-    if Maze.is_obstacle(maze, new_y, new_x):
+    if maze.is_obstacle(grid, new_y, new_x):
         print("obstacle! try again")
         return position
 

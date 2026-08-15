@@ -1,4 +1,4 @@
-import constants
+from . import constants
 
 
 def display_maze(maze: list[list[str]], robot_pos: tuple[int, int]) -> None:

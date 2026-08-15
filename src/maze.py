@@ -1,4 +1,4 @@
-import constants
+from . import constants
 
 
 def is_obstacle(

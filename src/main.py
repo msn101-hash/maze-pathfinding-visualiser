@@ -1,7 +1,7 @@
-import generator
-import maze
-import robot
-import renderer
+from . import generator
+from . import maze
+from . import robot
+from . import renderer
 
 
 def get_player_move() -> str:
