@@ -1,56 +1,86 @@
-Toy Robot Maze Solver
+# Toy Robot Maze Solver
 
-Toy Robot Maze Solver is a Python application that generates a random maze using recursive backtracking. Players can solve the maze by manually navigating a robot to the exit.
+Toy Robot Maze Solver is a Python application that procedurally generates random mazes using recursive backtracking. Players can navigate a robot through the maze using directional commands and attempt to reach the exit.
 
-
-Features
+## Features
 
 - Procedurally generated random mazes
 - Maze generation using recursive backtracking
 - Manual robot navigation
-- Random exit generation
+- Randomly generated exits
 - Modular project structure
-- Unit tests
+- Unit tests for maze generation and functionality
 
+## Demo
 
-# Demo
+Coming soon.
 
+## Installation
 
-Installation
+Clone the repository:
 
-# git clone
-# cd maze-pathfinding-visualiser
-# python -m src.main
+```bash
+git clone https://github.com/msn101-hash/maze-pathfinding-visualiser.git
+cd maze-pathfinding-visualiser
+```
 
+Run the application:
 
-Usage
+```bash
+python -m src.main
+```
+
+## Usage
 
 Use the following commands to move the robot:
-- north
-- east
-- south
-- west
+- `north`
+- `east`
+- `south`
+- `west`
 
-Use "quit" to end the program
+Use `quit` to end the program
 
+## Algorithms
 
-Algorithms
-Maze generation
+### Maze generation
 
-The maze is generated using recursive backtracking. First the algorithm is given the position of a random cell to explore in a grid of cells and walls. It explores the cell by checking for neighbouring cells that have not been visited yet, and randomly picking one to explore. It then removes the wall between itself and the neighbouring cell before exploring it. A cell is considered explored once all neighbouring cells have been visited.
+The maze is generated using recursive backtracking. The algorithm begins at a starting cell in a grid of cells separated by walls. It checks the current cell for unvisited neighbouring cells and randomly selects one to explore.
 
-The program continues with this process until it reaches an explored cell. It then backtracks to a cell that hasn't been explored, and continues exploring it and the rest of the grid until every cell has been visited.
+When an unvisited neighbour is selected, the wall between the two cells is removed and the algorithm moves to the neighbouring cell. This process continues until a cell that has no unvisited neighbours is reached.
 
+The algorithm then backtracks through previously visited cells until it finds a cell with an unvisited neighbour. It continues exploring and backtracking until every cell in the grid has been visited.
 
-Project Structure
+The result is a randomly generated maze in which every room is reachable from every other room.
 
+## Project Structure
+
+```text
 src/
-    constants.py
-    generator.py
-    main.py
-    maze.py
-    rendered.py
-    robot.py
+    constants.py - stores constant variables
+    generator.py - procedurally generates a random maze
+    main.py      - executes the program
+    maze.py      - determines whether a position is a wall or exit
+    renderer.py  - displays the maze
+    robot.py     - handles robot movement
 
 tests/
-    test_generator.py
+    test_generator.py - tests maze generation and related functionality
+```
+
+## Testing
+
+Run all unit tests with:
+
+```bash
+python -m unittest discover
+```
+
+The test suite currently covers:
+- wall removal
+- exit generation
+- maze connectivity
+- helper functions
+
+## Requirements
+
+- Python 3.x
