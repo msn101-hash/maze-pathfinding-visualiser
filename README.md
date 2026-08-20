@@ -52,19 +52,32 @@ The algorithm then backtracks through previously visited cells until it finds a 
 
 The result is a randomly generated maze in which every room is reachable from every other room.
 
+## Design / Architecture
+
+The project is divided into separate modules, with each module responsible for a specific part of the application:
+
+- `generator.py` handles procedural maze generation using recursive backtracking.
+- `robot.py` handles the robot's position and movement.
+- `maze.py` contains functions for checking properties of the maze, such as whether a position is an exit.
+- `renderer.py` handles displaying the maze and robot.
+- `constants.py` stores values shared across the project.
+- `main.py` coordinates the different components and controls the game loop.
+
+This separation keeps individual components focused on a single responsibility and makes the code easier to test and maintain.
+
 ## Project Structure
 
 ```text
 src/
-    constants.py - stores constant variables
-    generator.py - procedurally generates a random maze
-    main.py      - executes the program
-    maze.py      - determines whether a position is a wall or exit
-    renderer.py  - displays the maze
-    robot.py     - handles robot movement
+    generator.py
+    robot.py
+    maze.py
+    renderer.py
+    constants.py
+    main.py
 
 tests/
-    test_generator.py - tests maze generation and related functionality
+    test_generator.py
 ```
 
 ## Testing
