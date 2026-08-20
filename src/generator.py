@@ -14,7 +14,7 @@ def generate_maze(height: int, width: int) -> list[list[str]]:
     Generate a random maze using recursive backtracking.
     """
     
-    maze = []
+    grid = []
     visited = []
 
     for i in range(height):
@@ -26,22 +26,22 @@ def generate_maze(height: int, width: int) -> list[list[str]]:
                 row.append(constants.WALL)
             else:
                 row.append(constants.EMPTY)
-        maze.append(row)
+        grid.append(row)
 
     y = height // 2
     x = width // 2
-    carve_maze(y, x, maze, visited)
-    generate_exits(maze)
+    carve_maze(y, x, grid, visited)
+    generate_exits(grid)
 
-    return maze
+    return grid
 
-def generate_exits(maze: list[list[str]]) -> None:
+def generate_exits(grid: list[list[str]]) -> None:
     """
-    Generate a random exit on the edge of the maze.
+    Generate a random exit on the edge of the grid.
     """
 
-    height = len(maze)
-    width = len(maze[0])
+    height = len(grid)
+    width = len(grid[0])
 
     EXITS = {
         "north": (0, random.randint(1, width - 2)),
@@ -53,33 +53,33 @@ def generate_exits(maze: list[list[str]]) -> None:
     exit = random.choice(list(EXITS.keys()))
     y = EXITS[exit][0]
     x = EXITS[exit][1]
-    maze[y][x] = constants.EXIT
+    grid[y][x] = constants.EXIT
 
 def carve_maze(
     y: int,
     x: int,
-    maze: list[list[str]],
+    grid: list[list[str]],
     visited: list[tuple[int, int]]
 ) -> None:
     """
-    Recursively carve passages through the maze using the
+    Recursively carve passages through the grid using the
     recursive backtracking algorithm.
     """
     
     visited.append((y, x))
-    unvisited = find_unvisited(y, x, maze, visited)
+    unvisited = find_unvisited(y, x, grid, visited)
 
     while unvisited:
         neighbour = random.choice(unvisited)
-        remove_wall((y, x), neighbour, maze)
+        remove_wall((y, x), neighbour, grid)
         new_y, new_x = neighbour
-        carve_maze(new_y, new_x, maze, visited)
-        unvisited = find_unvisited(y, x, maze, visited)
+        carve_maze(new_y, new_x, grid, visited)
+        unvisited = find_unvisited(y, x, grid, visited)
 
 def find_unvisited(
     y: int,
     x: int,
-    maze: list[list[str]],
+    grid: list[list[str]],
     visited: list[tuple[int, int]]
 ) -> list[tuple[int, int]]:
     """
@@ -96,8 +96,8 @@ def find_unvisited(
         "west": (0, -2)
     }
     
-    height = len(maze)
-    width = len(maze[0])
+    height = len(grid)
+    width = len(grid[0])
     unvisited = []
 
     for dy, dx in MOVES.values():
@@ -114,7 +114,7 @@ def find_unvisited(
 def remove_wall(
     cell: tuple[int, int],
     neighbour: tuple[int, int],
-    maze: list[list[str]]
+    grid: list[list[str]]
 ) -> None:
     """
     Remove the wall between two adjacent cells.
@@ -122,4 +122,4 @@ def remove_wall(
     
     wall_y = int((cell[0] + neighbour[0]) / 2)
     wall_x = int((cell[1] + neighbour[1]) / 2)
-    maze[wall_y][wall_x] = constants.EMPTY
+    grid[wall_y][wall_x] = constants.EMPTY

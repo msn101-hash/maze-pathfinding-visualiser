@@ -2,7 +2,7 @@ from . import constants
 
 
 def is_obstacle(
-    maze: list[list[str]],
+    grid: list[list[str]],
     y: int,
     x: int
 ) -> bool:
@@ -10,10 +10,10 @@ def is_obstacle(
     Return True if the specified position is a wall.
     """
     
-    return maze[y][x] == constants.WALL
+    return grid[y][x] == constants.WALL
     
 def is_exit(
-    maze: list[list[str]],
+    grid: list[list[str]],
     y: int,
     x: int
 ) -> bool:
@@ -21,4 +21,4 @@ def is_exit(
     Return True if the specified position is an exit.
     """
     
-    return maze[y][x] == constants.EXIT
+    return grid[y][x] == constants.EXIT
