@@ -33,8 +33,12 @@ def main() -> None:
         if command == "quit":
             return
         
-        y, x = robot.move_robot(grid, command, (y, x))
-        if maze.is_exit(grid, y, x):
+        position, status = robot.move_robot(grid, command, (y, x))
+        y, x = position
+
+        if status == "obstacle":
+            print("Obstacle! Try again")
+        elif maze.is_exit(grid, y, x):
             print("Congratulations! You solved the maze")
             return
         

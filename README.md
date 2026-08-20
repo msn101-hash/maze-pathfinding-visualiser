@@ -78,6 +78,8 @@ src/
 
 tests/
     test_generator.py
+    test_robot.py
+    test_maze.py
 ```
 
 ## Testing
@@ -89,10 +91,13 @@ python -m unittest discover
 ```
 
 The test suite currently covers:
-- wall removal
-- exit generation
-- maze connectivity
-- helper functions
+- Wall removal
+- Exit generation
+- Maze connectivity
+- Robot movement
+- Wall collision
+- Obstacle and exit detection
+- Helper functions
 
 ## Requirements
 

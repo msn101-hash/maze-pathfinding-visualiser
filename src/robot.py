@@ -25,7 +25,8 @@ def move_robot(
     """
     Move the robot from one position to the next.
     """
-    
+
+    status = "normal"
     new_y, new_x = position[0], position[1]
 
     dy, dx = MOVES[command]
@@ -33,8 +34,8 @@ def move_robot(
     new_x += dx
 
     if maze.is_obstacle(grid, new_y, new_x):
-        print("obstacle! try again")
-        return position
+        status = "obstacle"
+        return position, status
 
     position = (new_y, new_x)
-    return position
+    return position, status
