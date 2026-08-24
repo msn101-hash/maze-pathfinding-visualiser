@@ -15,7 +15,6 @@ def generate_maze(height: int, width: int) -> list[list[str]]:
     """
     
     grid = []
-    visited = []
 
     for i in range(height):
         row = []
@@ -30,7 +29,8 @@ def generate_maze(height: int, width: int) -> list[list[str]]:
 
     y = height // 2
     x = width // 2
-    carve_maze(y, x, grid, visited)
+
+    carve_maze(y, x, grid, set())
     generate_exits(grid)
 
     return grid
@@ -44,10 +44,10 @@ def generate_exits(grid: list[list[str]]) -> None:
     width = len(grid[0])
 
     EXITS = {
-        "north": (0, random.randint(1, width - 2)),
-        "south": (height - 1, random.randint(1, width - 2)),
-        "east": (random.randint(1, height - 2), width - 1),
-        "west": (random.randint(1, height - 2), 0)
+        "north": (0, random.randrange(1, width - 2, 2)),
+        "south": (height - 1, random.randrange(1, width - 2, 2)),
+        "east": (random.randrange(1, height - 2, 2), width - 1),
+        "west": (random.randrange(1, height - 2, 2), 0)
     }
 
     exit = random.choice(list(EXITS.keys()))
@@ -59,14 +59,14 @@ def carve_maze(
     y: int,
     x: int,
     grid: list[list[str]],
-    visited: list[tuple[int, int]]
+    visited: set[tuple[int, int]]
 ) -> None:
     """
     Recursively carve passages through the grid using the
     recursive backtracking algorithm.
     """
     
-    visited.append((y, x))
+    visited.add((y, x))
     unvisited = find_unvisited(y, x, grid, visited)
 
     while unvisited:

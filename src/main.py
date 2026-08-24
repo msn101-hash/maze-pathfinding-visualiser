@@ -1,3 +1,4 @@
+import time
 from . import generator
 from . import maze
 from . import robot
@@ -9,7 +10,7 @@ def get_player_move() -> str:
     Get the input of a player and check if it is a valid command.
     """
 
-    commands = {"north", "south", "east", "west", "quit"}
+    commands = {"north", "south", "east", "west", "solve", "quit"}
     while True:
         command = input("Enter a command: ").lower()
         if command not in commands:
@@ -22,6 +23,8 @@ def main() -> None:
     Run the program.
     """
 
+    # Make sure that when height and width are divided by 2 and rounded up,
+    # the result is even
     height = 11
     width = 23
     grid = generator.generate_maze(height, width)
@@ -32,6 +35,14 @@ def main() -> None:
         command = get_player_move()
         if command == "quit":
             return
+        elif command == "solve":
+            path = robot.solve_maze(y, x, grid, set())
+            for robot_pos in path:
+                time.sleep(1)
+                renderer.display_maze(grid, robot_pos)
+
+            y, x = path[-1]
+            continue
         
         position, status = robot.move_robot(grid, command, (y, x))
         y, x = position

@@ -1,4 +1,5 @@
 from . import maze
+from . import constants
 
 
 MOVES = {
@@ -39,3 +40,35 @@ def move_robot(
 
     position = (new_y, new_x)
     return position, status
+
+def solve_maze(
+    y: int,
+    x: int,
+    grid: list[list[str]],
+    visited: set[tuple[int, int]]
+) -> list:
+
+    MOVES = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+    visited.add((y, x))
+    
+    for wall_dy, wall_dx in MOVES:
+        wall_y = y + wall_dy
+        wall_x = x + wall_dx
+
+        if 0 <= wall_y < len(grid) and 0 <= wall_x < len(grid[0]):
+            if grid[wall_y][wall_x] == constants.EXIT:
+                return [(y, x), (wall_y, wall_x)]
+            elif grid[wall_y][wall_x] == constants.EMPTY:
+                room_dy = wall_dy * 2
+                room_dx = wall_dx * 2
+                room_y = y + room_dy
+                room_x = x + room_dx
+
+                if 0 <= room_y < len(grid) and 0 <= room_x < len(grid[0]):
+                    if (room_y, room_x) not in visited:
+                        path = solve_maze(room_y, room_x, grid, visited)
+
+                        if len(path) > 0:
+                            return [(y, x)] + path
+
+    return []
