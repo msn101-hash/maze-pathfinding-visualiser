@@ -28,6 +28,10 @@ class TestGenerator(unittest.TestCase):
         maze: list[list[str]],
         visited: set[tuple[int, int]]
     ) -> None:
+        """
+        Check if a randomly generated maze is connected using
+        the DFS algorithm.
+        """
 
         MOVES = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         
@@ -36,7 +40,7 @@ class TestGenerator(unittest.TestCase):
             wall_y = y + wall_dy
             wall_x = x + wall_dx
 
-            if maze[wall_y][wall_x] != constants.WALL:
+            if maze[wall_y][wall_x] == constants.EMPTY:
                 room_dy = wall_dy * 2
                 room_dx = wall_dx * 2
                 room_y = y + room_dy

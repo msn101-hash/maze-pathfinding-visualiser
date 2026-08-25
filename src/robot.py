@@ -47,6 +47,10 @@ def solve_maze(
     grid: list[list[str]],
     visited: set[tuple[int, int]]
 ) -> list:
+    """
+    Find a path to the exit from the starting position using the
+    DFS algorithm.
+    """
 
     MOVES = [(1, 0), (0, 1), (-1, 0), (0, -1)]
     visited.add((y, x))
