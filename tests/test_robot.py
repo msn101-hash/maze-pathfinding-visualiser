@@ -71,5 +71,5 @@ class TestRobot(unittest.TestCase):
 
     def test_pathfinding(self):
         path = robot.solve_maze(3, 3, self.maze, set())
-        expected = [(3, 3), (3, 5), (5, 5), (5, 3), (6, 3)]
+        expected = [(3, 3), (3, 4), (3, 5), (4, 5), (5, 5), (5, 4), (5, 3), (6, 3)]
         self.assertEqual(expected, path)

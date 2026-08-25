@@ -29,17 +29,22 @@ def main() -> None:
     width = 23
     grid = generator.generate_maze(height, width)
     y, x = robot.set_position(height, width)
+
+    renderer.display_maze(grid, (y, x))
     
     while True:
-        renderer.display_maze(grid, (y, x))
         command = get_player_move()
         if command == "quit":
             return
+        
         elif command == "solve":
             path = robot.solve_maze(y, x, grid, set())
             for robot_pos in path:
-                time.sleep(1)
+                time.sleep(.5)
                 renderer.display_maze(grid, robot_pos)
+
+                if robot_pos == path[-1]:
+                    print("Maze solved!")
 
             y, x = path[-1]
             continue
@@ -49,9 +54,12 @@ def main() -> None:
 
         if status == "obstacle":
             print("Obstacle! Try again")
+            continue
         elif maze.is_exit(grid, y, x):
             print("Congratulations! You solved the maze")
             return
+
+        renderer.display_maze(grid, (y, x))
         
 if __name__ == "__main__":
     main()
