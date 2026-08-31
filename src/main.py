@@ -1,8 +1,8 @@
-import time
 from . import generator
 from . import maze
 from . import robot
 from . import renderer
+from . import pathfinding
 
 
 def get_player_move() -> str:
@@ -38,16 +38,15 @@ def main() -> None:
             return
         
         elif command == "solve":
-            path = robot.solve_maze(y, x, grid, set())
-            for robot_pos in path:
-                time.sleep(.5)
-                renderer.display_maze(grid, robot_pos)
+            path = pathfinding.find_path(y, x, grid, set())
+            status = renderer.solve_maze(grid, path)
 
-                if robot_pos == path[-1]:
-                    print("Maze solved!")
-
-            y, x = path[-1]
-            continue
+            if status == "solved":
+                print("Maze solved!")
+                return
+            elif status == "unsolved":
+                print("Can't solve maze!")
+                continue
         
         position, status = robot.move_robot(grid, command, (y, x))
         y, x = position

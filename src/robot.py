@@ -1,5 +1,4 @@
 from . import maze
-from . import constants
 
 
 MOVES = {
@@ -40,33 +39,3 @@ def move_robot(
 
     position = (new_y, new_x)
     return position, status
-
-def solve_maze(
-    y: int,
-    x: int,
-    grid: list[list[str]],
-    visited: set[tuple[int, int]]
-) -> list:
-    """
-    Find a path to the exit from the starting position using the
-    DFS algorithm.
-    """
-
-    MOVES = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-    visited.add((y, x))
-    
-    for cell_dy, cell_dx in MOVES:
-        cell_y = y + cell_dy
-        cell_x = x + cell_dx
-
-        if 0 <= cell_y < len(grid) and 0 <= cell_x < len(grid[0]):
-            if grid[cell_y][cell_x] == constants.EXIT:
-                return [(y, x), (cell_y, cell_x)]
-            
-            elif grid[cell_y][cell_x] == constants.EMPTY:
-                if (cell_y, cell_x) not in visited:
-                    path = solve_maze(cell_y, cell_x, grid, visited)
-                    if len(path) > 0:
-                        return [(y, x)] + path
-
-    return []

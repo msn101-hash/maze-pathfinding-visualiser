@@ -1,8 +1,5 @@
 import unittest
 from src import robot
-from src import generator
-from src import constants
-from src import renderer
 
 
 class TestRobot(unittest.TestCase):
@@ -57,19 +54,3 @@ class TestRobot(unittest.TestCase):
         new_position, status = robot.move_robot(self.maze, "west", (1, 1))
         self.assertEqual((1, 1), new_position)
         self.assertEqual("obstacle", status)
-
-    def test_solve_maze_finds_exit(self):
-        maze = generator.generate_maze(7, 7)
-        path = robot.solve_maze(3, 3, maze, set())
-
-        self.assertTrue(path)
-        start = path[0]
-        exit = path[-1]
-
-        self.assertEqual((3, 3), start)
-        self.assertTrue(maze[exit[0]][exit[1]] == constants.EXIT)
-
-    def test_pathfinding(self):
-        path = robot.solve_maze(3, 3, self.maze, set())
-        expected = [(3, 3), (3, 4), (3, 5), (4, 5), (5, 5), (5, 4), (5, 3), (6, 3)]
-        self.assertEqual(expected, path)
