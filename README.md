@@ -1,12 +1,13 @@
 # Toy Robot Maze Solver
 
-Toy Robot Maze Solver is a Python application that procedurally generates random mazes using recursive backtracking. Players can navigate a robot through the maze using directional commands and attempt to reach the exit.
+Toy Robot Maze Solver is a Python application that procedurally generates random mazes using recursive backtracking. Players can navigate a robot through the maze using directional commands and attempt to reach the exit, or have the robot solve the maze automatically using the DFS algorithm.
 
 ## Features
 
 - Procedurally generated random mazes
 - Maze generation using recursive backtracking
 - Manual robot navigation
+- Pathfinding
 - Randomly generated exits
 - Modular project structure
 - Unit tests for maze generation and functionality
@@ -20,7 +21,7 @@ Coming soon.
 Clone the repository:
 
 ```bash
-git clone https://github.com/msn101-hash/maze-pathfinding-visualiser.git
+git clone ...
 cd maze-pathfinding-visualiser
 ```
 
@@ -38,19 +39,27 @@ Use the following commands to move the robot:
 - `south`
 - `west`
 
-Use `quit` to end the program
+Use `solve` to automatically solve the maze, and `quit` to end the program.
 
 ## Algorithms
 
 ### Maze generation
 
-The maze is generated using recursive backtracking. The algorithm begins at a starting cell in a grid of cells separated by walls. It checks the current cell for unvisited neighbouring cells and randomly selects one to explore.
+The maze is generated using recursive backtracking. The algorithm begins in a room in a grid of rooms separated by walls. It checks the current room for unvisited neighbouring rooms and randomly selects one to explore.
 
-When an unvisited neighbour is selected, the wall between the two cells is removed and the algorithm moves to the neighbouring cell. This process continues until a cell that has no unvisited neighbours is reached.
+When an unvisited neighbour is selected, the wall between the two rooms is removed and the algorithm moves to the neighbouring room. This process continues until a room that has no unvisited neighbours is reached.
 
-The algorithm then backtracks through previously visited cells until it finds a cell with an unvisited neighbour. It continues exploring and backtracking until every cell in the grid has been visited.
+The algorithm then backtracks through previously visited rooms until it finds a room with an unvisited neighbour. It continues exploring and backtracking until every room in the grid has been visited.
 
 The result is a randomly generated maze in which every room is reachable from every other room.
+
+### Pathfinding
+
+The pathfinding algorithm uses DFS to solve the maze. It is given a starting position in the maze and searches for the exit.
+
+From the starting position, it looks for empty, unvisited neighbouring cells and recursively explores them. If a route reaches a dead end, the algorithm backtracks and explores another unvisited route. When the exit is found, the recursive calls return the successful path back to the starting position.
+
+The result is the only path from the starting position to the exit.
 
 ## Design / Architecture
 
@@ -60,6 +69,7 @@ The project is divided into separate modules, with each module responsible for a
 - `robot.py` handles the robot's position and movement.
 - `maze.py` contains functions for checking properties of the maze, such as whether a position is an exit.
 - `renderer.py` handles displaying the maze and robot.
+- `pathfinding.py` handles finding a path from the starting position to the exit.
 - `constants.py` stores values shared across the project.
 - `main.py` coordinates the different components and controls the game loop.
 
@@ -73,13 +83,15 @@ src/
     robot.py
     maze.py
     renderer.py
+    pathfinding.py
     constants.py
     main.py
 
 tests/
     test_generator.py
-    test_robot.py
     test_maze.py
+    test_robot.py
+    test_pathfinding.py
 ```
 
 ## Testing
@@ -95,6 +107,7 @@ The test suite currently covers:
 - Exit generation
 - Maze connectivity
 - Robot movement
+- Pathfinding
 - Wall collision
 - Obstacle and exit detection
 - Helper functions
