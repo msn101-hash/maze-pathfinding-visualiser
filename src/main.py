@@ -12,7 +12,7 @@ def get_player_move() -> str:
 
     commands = {"north", "south", "east", "west", "solve", "quit"}
     while True:
-        command = input("Enter a command: ").lower()
+        command = input("\nEnter a command: ").lower()
         if command not in commands:
             print("Invalid command! Try again")
             continue
@@ -42,7 +42,7 @@ def main() -> None:
             status = renderer.solve_maze(grid, path)
 
             if status == "solved":
-                print("Maze solved!")
+                print("\nMaze solved!")
                 return
             elif status == "unsolved":
                 print("Can't solve maze!")
@@ -55,7 +55,8 @@ def main() -> None:
             print("Obstacle! Try again")
             continue
         elif maze.is_exit(grid, y, x):
-            print("Congratulations! You solved the maze")
+            renderer.display_maze(grid, (y, x))
+            print("\nCongratulations! You solved the maze")
             return
 
         renderer.display_maze(grid, (y, x))
