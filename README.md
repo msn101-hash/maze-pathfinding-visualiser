@@ -14,14 +14,14 @@ Toy Robot Maze Solver is a Python application that procedurally generates random
 
 ## Demo
 
-Coming soon.
+![Toy Robot Maze Solver Demo](demo.gif)
 
 ## Installation
 
 Clone the repository:
 
 ```bash
-git clone ...
+git clone https://github.com/msn101-hash/maze-pathfinding-visualiser.git
 cd maze-pathfinding-visualiser
 ```
 
