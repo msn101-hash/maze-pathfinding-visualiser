@@ -21,8 +21,8 @@ Maze Pathfinder is a Python application that procedurally generates random mazes
 Clone the repository:
 
 ```bash
-git clone https://github.com/msn101-hash/maze-pathfinding-visualiser.git
-cd maze-pathfinding-visualiser
+git clone https://github.com/msn101-hash/maze-pathfinder.git
+cd maze-pathfinder
 ```
 
 Run the application:
