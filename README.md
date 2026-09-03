@@ -1,6 +1,6 @@
-# Toy Robot Maze Solver
+# Maze Pathfinder
 
-Toy Robot Maze Solver is a Python application that procedurally generates random mazes using recursive backtracking. Players can navigate a robot through the maze using directional commands and attempt to reach the exit, or have the robot solve the maze automatically using the DFS algorithm.
+Maze Pathfinder is a Python application that procedurally generates random mazes using recursive backtracking. Players can navigate a robot through the maze using directional commands and attempt to reach the exit, or have the robot solve the maze automatically using the DFS algorithm.
 
 ## Features
 
@@ -14,7 +14,7 @@ Toy Robot Maze Solver is a Python application that procedurally generates random
 
 ## Demo
 
-![Toy Robot Maze Solver Demo](demo.gif)
+![Maze Pathfinder Demo](demo.gif)
 
 ## Installation
 
